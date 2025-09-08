@@ -10,6 +10,7 @@
   --surface: var(--bone);    /* alt sections use the bone tint */
   --accent: #ff4f1f;         /* vivid Kill Team orange */
   --accent-700: #c33a13;     /* deeper orange for hover/press */
+  --accent-rgb: 255, 79, 31; /* for translucent accent backgrounds */
   --radius: 10px;
 }
 
@@ -22,6 +23,7 @@
     --surface: #252b32;    /* raised surfaces */
     --accent: #ff6a2b;     /* brighter orange for dark bg */
     --accent-700: #ff4f1f; /* pressed state */
+    --accent-rgb: 255, 106, 43;
   }
 }
 
@@ -138,6 +140,23 @@ p { margin-top: 0.75rem; }
 
 .btn-lg { padding: 0.8rem 1.1rem; font-weight: 600; }
 
+/* Button with small inline logo */
+.btn-with-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.btn-with-icon .btn-logo {
+  width: 18px;
+  height: 18px;
+  display: block;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
 /* Focus styles */
 .btn:focus-visible,
 .nav a:focus-visible,
@@ -163,6 +182,51 @@ p { margin-top: 0.75rem; }
 .lede { font-size: clamp(1.05rem, 1.2vw + 0.6rem, 1.25rem); color: var(--muted); max-width: 65ch; margin-inline: auto; }
 
 .hero-cta { margin-top: 1rem; display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+
+/* Pricing callout */
+.pricing-callout {
+  margin-top: 0.75rem;
+  display: grid;
+  gap: 0.5rem;
+  justify-items: center;
+}
+
+.price-tiers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.price-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  box-shadow: 0 1px 0 rgba(0,0,0,.02);
+}
+
+.price-chip .label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 700; }
+.price-chip .amount { font-weight: 800; color: var(--accent); }
+
+/* Subtle highlight, not a solid button */
+.price-chip.highlight {
+  border-color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.08);
+  box-shadow: inset 0 0 0 2px rgba(var(--accent-rgb), 0.06);
+}
+
+.price-chip.alt {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.price-chip.alt .label { color: rgba(255,255,255,.85); }
+.price-chip.alt .amount { color: #fff; }
 
 /* Accent inline links inside main content (exclude buttons) */
 main a:not(.btn) { color: var(--accent); }
@@ -213,6 +277,62 @@ main a:not(.btn):hover { text-decoration: underline; }
 
 .card ul { padding-left: 1rem; }
 .card li { margin: 0.3rem 0; }
+
+/* QR card */
+.qr-card { display: grid; place-items: center; text-align: center; }
+.qr {
+  width: 240px;
+  max-width: 100%;
+  background: #ffffff; /* ensure strong contrast for scanners */
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px;
+}
+
+/* Logo card */
+.logo-card { display: grid; place-items: center; text-align: center; }
+.nekt-logo {
+  width: 240px;
+  max-width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px;
+  background: var(--bg);
+}
+
+/* Partners (registration) */
+.partners {
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.partner-logo {
+  width: 160px;
+  max-width: 100%;
+  display: block;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  padding: 6px;
+}
+
+/* Inline partner logo next to buttons */
+.partner-inline { display: inline-flex; align-items: center; }
+.partner-logo.sm { width: 110px; padding: 4px; border-radius: calc(var(--radius) - 2px); }
+
+/* Register section CTA row: push partner logo to the right */
+.cta-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap; /* stack on small screens */
+}
+
+.cta-row .partner { margin-left: auto; }
 
 /* Footer */
 .site-footer { text-align: center; padding: 2rem 0; }
