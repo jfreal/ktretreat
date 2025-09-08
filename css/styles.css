@@ -55,6 +55,16 @@ h1 { font-size: clamp(2rem, 4vw + 1rem, 3rem); letter-spacing: -0.02em; }
 h2 { font-size: clamp(1.5rem, 2vw + 0.5rem, 2rem); margin-bottom: 0.75rem; }
 h3 { font-size: 1.125rem; margin-bottom: 0.5rem; }
 
+.section h2::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 999px;
+  margin-top: 6px;
+}
+
 p { margin-top: 0.75rem; }
 
 .muted { color: var(--muted); }
@@ -137,11 +147,26 @@ p { margin-top: 0.75rem; }
 }
 
 /* Hero */
-.hero { text-align: center; background: var(--surface); }
+.hero { text-align: center; background: var(--surface); position: relative; overflow: hidden; }
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, transparent 47%, var(--accent) 47% 52%, transparent 52%),
+    linear-gradient(225deg, transparent 47%, var(--accent) 47% 52%, transparent 52%);
+  opacity: 0.06; /* subtle, adjust if you want more punch */
+  pointer-events: none;
+}
 
 .lede { font-size: clamp(1.05rem, 1.2vw + 0.6rem, 1.25rem); color: var(--muted); max-width: 65ch; margin-inline: auto; }
 
 .hero-cta { margin-top: 1rem; display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+
+/* Accent inline links inside main content (exclude buttons) */
+main a:not(.btn) { color: var(--accent); }
+main a:not(.btn):hover { text-decoration: underline; }
 
 /* Info grid */
 .info-grid {
