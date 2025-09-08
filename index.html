@@ -10,6 +10,7 @@
 
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="preload" as="image" href="img/art/Kill-Team-Cover-2.jpg" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -393,6 +394,39 @@
           else if (e.key === 'ArrowRight') next();
           else if (e.key === 'ArrowLeft') prev();
         });
+      })();
+
+      // Rotating hero background
+      (function () {
+        const hero = document.querySelector('.hero');
+        if (!hero) return;
+        const urls = [
+          'img/art/Kill-Team-Cover-2.jpg',
+          'img/art/kill-team-artwork-1.jpg',
+          'img/art/5SUBZChTwaq4tzq9fXsx3j-1200-80.jpg',
+          'img/art/Kill-Team-Hivestorm.jpg',
+          'img/art/PKYmc7gR7-VvOh5hGHmo6VTWpvFcihO6QnXLMwj9LP4.webp'
+        ];
+
+        const layers = urls.map((url, i) => {
+          const div = document.createElement('div');
+          div.className = 'hero-bg' + (i === 0 ? ' show' : '');
+          div.style.backgroundImage = `url('${url}')`;
+          hero.prepend(div);
+          return div;
+        });
+
+        // Respect reduced motion or single image
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        if (layers.length < 2) return;
+
+        let idx = 0;
+        const intervalMs = 7000;
+        setInterval(() => {
+          layers[idx].classList.remove('show');
+          idx = (idx + 1) % layers.length;
+          layers[idx].classList.add('show');
+        }, intervalMs);
       })();
     </script>
   </body>
