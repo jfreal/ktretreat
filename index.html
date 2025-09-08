@@ -92,12 +92,24 @@
           </div>
 
           <div class="gallery" aria-label="Dorm photos">
-            <img src="img/dorm/3AF72BA7-4793-461D-AFB7-815B2BD2C30B.jpeg" alt="Dorm room with bunks" loading="lazy" />
-            <img src="img/dorm/4E9CC1B8-4FE2-4E77-AC6C-CEF4720C5724.jpeg" alt="Bunk beds in shared room" loading="lazy" />
-            <img src="img/dorm/9ED1543B-3CCC-45B8-A86B-F1A3CF2E9C8C.jpeg" alt="Common lounge seating" loading="lazy" />
-            <img src="img/dorm/Untitled.jpg" alt="Spacious dorm area" loading="lazy" />
-            <img src="img/dorm/Untitled (1).jpg" alt="Bunks with natural light" loading="lazy" />
-            <img src="img/dorm/Untitled (2).jpg" alt="Hallway and rooms" loading="lazy" />
+            <a href="img/dorm/3AF72BA7-4793-461D-AFB7-815B2BD2C30B.jpeg" target="_blank" rel="noopener noreferrer">
+              <img src="img/dorm/3AF72BA7-4793-461D-AFB7-815B2BD2C30B.jpeg" alt="Dorm room with bunks" loading="lazy" />
+            </a>
+            <a href="img/dorm/4E9CC1B8-4FE2-4E77-AC6C-CEF4720C5724.jpeg" target="_blank" rel="noopener noreferrer">
+              <img src="img/dorm/4E9CC1B8-4FE2-4E77-AC6C-CEF4720C5724.jpeg" alt="Bunk beds in shared room" loading="lazy" />
+            </a>
+            <a href="img/dorm/9ED1543B-3CCC-45B8-A86B-F1A3CF2E9C8C.jpeg" target="_blank" rel="noopener noreferrer">
+              <img src="img/dorm/9ED1543B-3CCC-45B8-A86B-F1A3CF2E9C8C.jpeg" alt="Common lounge seating" loading="lazy" />
+            </a>
+            <a href="img/dorm/Untitled.jpg" target="_blank" rel="noopener noreferrer">
+              <img src="img/dorm/Untitled.jpg" alt="Spacious dorm area" loading="lazy" />
+            </a>
+            <a href="img/dorm/Untitled (1).jpg" target="_blank" rel="noopener noreferrer">
+              <img src="img/dorm/Untitled (1).jpg" alt="Bunks with natural light" loading="lazy" />
+            </a>
+            <a href="img/dorm/Untitled (2).jpg" target="_blank" rel="noopener noreferrer">
+              <img src="img/dorm/Untitled (2).jpg" alt="Hallway and rooms" loading="lazy" />
+            </a>
           </div>
         </div>
       </section>
@@ -130,12 +142,24 @@
           </div>
 
           <div class="gallery" aria-label="Food photos">
-            <img src="img/food/IMG_4085.jpeg" alt="Breakfast spread" loading="lazy" />
-            <img src="img/food/Untitled.jpg" alt="Dinner plate" loading="lazy" />
-            <img src="img/food/Untitled (1).jpg" alt="Buffet style meal" loading="lazy" />
-            <img src="img/food/Untitled (2).jpg" alt="Salad and sides" loading="lazy" />
-            <img src="img/food/Untitled (3).jpg" alt="Hot entree" loading="lazy" />
-            <img src="img/food/Untitled (4).jpg" alt="Dessert options" loading="lazy" />
+            <a href="img/food/IMG_4085.jpeg" target="_blank" rel="noopener noreferrer">
+              <img src="img/food/IMG_4085.jpeg" alt="Breakfast spread" loading="lazy" />
+            </a>
+            <a href="img/food/Untitled.jpg" target="_blank" rel="noopener noreferrer">
+              <img src="img/food/Untitled.jpg" alt="Dinner plate" loading="lazy" />
+            </a>
+            <a href="img/food/Untitled (1).jpg" target="_blank" rel="noopener noreferrer">
+              <img src="img/food/Untitled (1).jpg" alt="Buffet style meal" loading="lazy" />
+            </a>
+            <a href="img/food/Untitled (2).jpg" target="_blank" rel="noopener noreferrer">
+              <img src="img/food/Untitled (2).jpg" alt="Salad and sides" loading="lazy" />
+            </a>
+            <a href="img/food/Untitled (3).jpg" target="_blank" rel="noopener noreferrer">
+              <img src="img/food/Untitled (3).jpg" alt="Hot entree" loading="lazy" />
+            </a>
+            <a href="img/food/Untitled (4).jpg" target="_blank" rel="noopener noreferrer">
+              <img src="img/food/Untitled (4).jpg" alt="Dessert options" loading="lazy" />
+            </a>
           </div>
         </div>
       </section>
@@ -228,6 +252,17 @@
       </section>
     </main>
 
+    <!-- Lightweight Lightbox -->
+    <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
+      <button class="lb-close" aria-label="Close">×</button>
+      <button class="lb-prev" aria-label="Previous image">‹</button>
+      <figure class="lb-figure">
+        <img id="lightbox-image" alt="" />
+        <figcaption id="lightbox-caption" class="small"></figcaption>
+      </figure>
+      <button class="lb-next" aria-label="Next image">›</button>
+    </div>
+
     <footer class="site-footer">
       <div class="container">
         <p class="small muted">© <span id="year"></span> Kill Team Retreat. All rights reserved.</p>
@@ -237,6 +272,93 @@
     <script>
       // Keep the year current without needing any framework
       document.getElementById('year').textContent = new Date().getFullYear();
+
+      // Lightweight Lightbox
+      (function () {
+        const lb = document.getElementById('lightbox');
+        if (!lb) return;
+        const imgEl = lb.querySelector('#lightbox-image');
+        const capEl = lb.querySelector('#lightbox-caption');
+        const btnClose = lb.querySelector('.lb-close');
+        const btnPrev = lb.querySelector('.lb-prev');
+        const btnNext = lb.querySelector('.lb-next');
+
+        let currentIndex = -1;
+        let galleryLinks = [];
+        let lastFocus = null;
+
+        function update() {
+          const a = galleryLinks[currentIndex];
+          if (!a) return;
+          const src = a.getAttribute('href');
+          const alt = a.querySelector('img')?.getAttribute('alt') || '';
+          imgEl.src = src;
+          imgEl.alt = alt;
+          capEl.textContent = alt;
+        }
+
+        function openFrom(gallery, index) {
+          galleryLinks = Array.from(gallery.querySelectorAll('a'));
+          currentIndex = index;
+          lastFocus = document.activeElement;
+          lb.classList.add('open');
+          lb.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+          update();
+          btnClose.focus();
+          const multi = galleryLinks.length > 1;
+          btnPrev.style.display = multi ? '' : 'none';
+          btnNext.style.display = multi ? '' : 'none';
+        }
+
+        function close() {
+          lb.classList.remove('open');
+          lb.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+          imgEl.src = '';
+          if (lastFocus) lastFocus.focus();
+        }
+
+        function next() {
+          if (galleryLinks.length < 2) return;
+          currentIndex = (currentIndex + 1) % galleryLinks.length;
+          update();
+        }
+
+        function prev() {
+          if (galleryLinks.length < 2) return;
+          currentIndex = (currentIndex - 1 + galleryLinks.length) % galleryLinks.length;
+          update();
+        }
+
+        // Click handling on galleries
+        document.querySelectorAll('.gallery').forEach((gallery) => {
+          gallery.addEventListener('click', (e) => {
+            const a = e.target.closest('a');
+            if (!a || !gallery.contains(a)) return;
+            // Only left-click without modifiers
+            if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+            e.preventDefault();
+            const links = Array.from(gallery.querySelectorAll('a'));
+            openFrom(gallery, links.indexOf(a));
+          });
+        });
+
+        // Overlay interactions
+        lb.addEventListener('click', (e) => {
+          if (e.target === lb) close();
+        });
+        btnClose.addEventListener('click', close);
+        btnNext.addEventListener('click', next);
+        btnPrev.addEventListener('click', prev);
+
+        window.addEventListener('keydown', (e) => {
+          if (!lb.classList.contains('open')) return;
+          if (e.key === 'Escape') close();
+          else if (e.key === 'ArrowRight') next();
+          else if (e.key === 'ArrowLeft') prev();
+        });
+      })();
     </script>
   </body>
 </html>
